@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+  - source: /index.html # Source file in your repo
+    destination: /var/www/html/ # Destination on the EC2 instance (adjust path for your web server)
+hooks:
+  BeforeInstall: # Example hook: Ensure the destination directory exists and clear old content
+    - location: scripts/before_install.sh
+      timeout: 300
+      runas: root
+  AfterInstall: # Example hook: Set permissions
+    - location: scripts/after_install.sh
+      timeout: 300
+      runas: root
+  ApplicationStart: # Example hook: Restart the web server
+    - location: scripts/start_server.sh
+      timeout: 300
+      runas: root
